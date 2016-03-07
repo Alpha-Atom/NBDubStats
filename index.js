@@ -12,7 +12,7 @@ new DubAPI({username: userName, password: passWord}, function (err, bot) {
   }
 
   bot.on('connected', function(name) {
-    console.log("Successfully connected to " + name "!");
+    console.log("Successfully connected to " + name + "!");
   });
 
   bot.on('disconnected', function(name) {
@@ -26,12 +26,17 @@ new DubAPI({username: userName, password: passWord}, function (err, bot) {
 
   bot.on(bot.events.roomPlaylistUpdate, function(data) {
      var lastplayed = data.lastPlay;
+     if (lastplayed === undefined) {
+       return;
+     }
      var score = lastplayed.score.updubs - lastplayed.score.downdubs;
      var grabs = lastplayed.score.grabs;
      var trackname = lastplayed.media.name;
      var fkid = lastplayed.media.fkid;
 
      console.log("Last played was track: " + trackname + " id: " + fkid);
-     console.log("Total score was: ": score + " also grabs: " + grabs);
+     console.log("Total score was: " + score + " also grabs: " + grabs);
   });
+
+  connect();
 });
