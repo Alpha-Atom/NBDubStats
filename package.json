@@ -1,0 +1,11 @@
+{
+  "name": "dubstats-mc",
+  "version": "0.0.1",
+  "description": "Simple statistic gathering bot for nightblue3 dubtrack room",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Coles",
+  "license": "MIT"
+}
