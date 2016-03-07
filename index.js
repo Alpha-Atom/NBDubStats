@@ -1,6 +1,8 @@
 var DubAPI = require("dubapi");
+var Redis = require("ioredis");
 var userName = "DubStatsBot";
 var passWord = process.argv[2];
+var redis = new Redis();
 
 new DubAPI({username: userName, password: passWord}, function (err, bot) {
   if (err) return console.error(err);
@@ -29,13 +31,32 @@ new DubAPI({username: userName, password: passWord}, function (err, bot) {
      if (lastplayed === undefined) {
        return;
      }
-     var score = lastplayed.score.updubs - lastplayed.score.downdubs;
-     var grabs = lastplayed.score.grabs;
+     var tscore = lastplayed.score.updubs - lastplayed.score.downdubs;
+     var tgrabs = lastplayed.score.grabs;
      var trackname = lastplayed.media.name;
      var fkid = lastplayed.media.fkid;
+     var userNum = bot.getUsers().length;
+     var timestamp = Date.now();
+     var hashname = "song:" + lastplayed.media.type + ":" + fkid;
 
      console.log("Last played was track: " + trackname + " id: " + fkid);
-     console.log("Total score was: " + score + " also grabs: " + grabs);
+     console.log("Total score was: " + tscore + " also grabs: " + tgrabs);
+     console.log("There are currently: " + userNum + " users in the room.");
+
+     var hashobject = {
+       songinfo: lastplayed.media,
+       score: tscore,
+       grabs: tgrabs,
+       users: userNum
+     };
+
+     redis.hset(hashname, timestamp, JSON.stringify(hashobject));
+  });
+
+  process.on('SIGINT', function() {
+    console.log("Caught interrupt signal.");
+    bot.disconnect();
+    process.exit();
   });
 
   connect();
