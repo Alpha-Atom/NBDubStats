@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matt Coles",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "dubapi": "^1.6.0",
+    "ioredis": "^1.15.1"
+  }
 }
