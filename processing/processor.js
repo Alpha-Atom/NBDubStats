@@ -27,13 +27,12 @@ var processing = function () {
           for (var x = 0; x < allkeys.length/2; x++) {
             var timestamp = allkeys[x*2];
             var playinfo = JSON.parse(allkeys[x*2+1]);
-            var main_key = playinfo.songinfo.type + "_" + playinfo.songinfo.fkid;
+            var main_key = timestamp + "_" + playinfo.songinfo.type + "_" + playinfo.songinfo.fkid;
             if (final_object.hasOwnProperty(main_key)) {
               final_object[main_key]["plays"] = final_object[main_key]["plays"]+1;
             } else {
               final_object[main_key] = {
                 "song_name": playinfo.songinfo.name,
-                "timestamp": timestamp,
                 "score": playinfo.score,
                 "plays": 1,
                 "grabs": playinfo.grabs,

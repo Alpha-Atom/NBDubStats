@@ -16,7 +16,7 @@ app.get('/dubstats/', function (req, res) {
       if (key == "generated") {
         songs_only[key] = songs[key];
       } else {
-        timestamphours = (new Date(songs[key]["timestamp"])).getUTCHours();
+        timestamphours = (new Date(Number.parseFloat(key.split("_")[0]))).getUTCHours();
         if (timestamphours >= time1 && timestamphours < time2) {
           songs_only[key] = songs[key];
         }
