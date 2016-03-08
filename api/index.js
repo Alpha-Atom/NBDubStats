@@ -14,49 +14,84 @@ app.get('/dubstats/', function (req, res) {
     "songs": [];
   }
   songs_array = [];
+  seen = {};
   if (time1 == -1) {
-    Object.keys(songs).forEach(function (key) {
+    Object.keys(songs).forEach(function (key, index) {
       if (key != "generated") {
-        songs_array.push(songs[key]);
+        var key_seen = key.split("_").slice(1).join("_");
+        if (seen[key_seen] === undefined) {
+          seen[key_seen] == index;
+          songs_array.push(songs[key]);
+        } else {
+          var tmp = songs_array[seen[key_seen]];
+          tmp.plays = tmp.plays+1;
+          songs_array[seen[key_seen]] = tmp;
+        }
       }
     });
   } else {
-    Object.keys(songs).forEach(function (key) {
+    Object.keys(songs).forEach(function (key, index) {
       if (key != "generated") {
-        timestamphours = (new Date(songs[key]["timestamp"]).getUTCHours();
+        timestamphours = (new Date(songs[key]["timestamp"])).getUTCHours();
         if (timestamphours >= time1 && timestamphours < time2) {
-          songs_array.push(songs[key]);
+          var key_seen = key.split("_").slice(1).join("_");
+          if (seen[key_seen] === undefined) {
+            seen[key_seen] == index;
+            songs_array.push(songs[key]);
+          } else {
+            var tmp = songs_array[seen[key_seen]];
+            tmp.plays = tmp.plays+1;
+            songs_array[seen[key_seen]] = tmp;
+          }
         }
       }
     });
   }
   if (sort_by == "ud") {
-
+    songs_array.sort(sort_ud);
   } else if (sort_by == "pl") {
-
+    songs_array.sort(sort_pl);
   } else if (sort_by == "gr") {
-
-  } else if (sort_by == "alp") {
-
-  }
-  if (time1 == -1 && time2 == -1) {
-    res.send(songs);
+    songs_array.sort(sort_gr);
   } else {
-    songs_only = {};
-    res.send(songs_only);
+    songs_array.sort(sort_ud);
+  }
+  return_obj.songs = songs_array;
+  if (time1 == -1 && time2 == -1) {
+    res.send(return_obj);
+  } else {
+    res.send(return_obj);
   }
 });
 
 var sort_ud( a, b ) {
-  
+  if (a.score > b.score) {
+    return 1;
+  } else if (a.score < b.score) {
+    return -1;
+  } else {
+    return 0;
+  }
 }
 
 var sort_pl( a, b ) {
-
+  if (a.plays > b.plays) {
+    return 1;
+  } else if (a.plays < b.plays) {
+    return -1;
+  } else {
+    return 0;
+  }
 }
 
 var sort_gr( a, b ) {
-  
+  if (a.grabs > b.grabs) {
+    return 1;
+  } else if (a.grabs < b.grabs) {
+    return -1;
+  } else {
+    return 0;
+  }
 }
 
 app.listen(3000, function () {
