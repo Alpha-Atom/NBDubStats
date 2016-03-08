@@ -28,7 +28,7 @@ app.get('/dubstats/', function (req, res) {
       if (key != "generated") {
         var key_seen = key.split("_").slice(1).join("_");
         if (seen[key_seen] === undefined) {
-	  seen[key_seen] = songs_array.length;
+          seen[key_seen] = songs_array.length;
           songs_array.push(songs[key]);
         } else {
           var tmp = songs_array[seen[key_seen]];
@@ -46,7 +46,7 @@ app.get('/dubstats/', function (req, res) {
         if (timestamphours >= time1 && timestamphours < time2) {
           var key_seen = key.split("_").slice(1).join("_");
           if (seen[key_seen] === undefined) {
-	    seen[key_seen] = songs_array.length;
+            seen[key_seen] = songs_array.length;
             songs_array.push(songs[key]);
           } else {
             var tmp = songs_array[seen[key_seen]];
@@ -89,19 +89,19 @@ var sort_pct = function ( a, b ) {
   } else if (a.pct_up < b.pct_up) {
     return 1;
   } else {
-   if (a.score > b.score) {
-    return -1;
-  } else if (a.score < b.score) {
-    return 1;
-  } else {
-    if (a.plays > b.plays) {
-     return -1;
-    } else if (a.plays < b.plays) {
-     return 1;
+    if (a.score > b.score) {
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
     } else {
-     return 0;
+      if (a.plays > b.plays) {
+        return -1;
+      } else if (a.plays < b.plays) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
-  }
   }
 }
 
@@ -112,11 +112,11 @@ var sort_ud = function ( a, b ) {
     return 1;
   } else {
     if (a.grabs > b.grabs) {
-     return -1;
+      return -1;
     } else if (a.grabs < b.grabs) {
-     return 1;
+      return 1;
     } else {
-     return 0;
+      return 0;
     }
   }
 }
@@ -127,19 +127,19 @@ var sort_pl = function ( a, b ) {
   } else if (a.plays < b.plays) {
     return 1;
   } else {
-   if (a.score > b.score) {
-    return -1;
-  } else if (a.score < b.score) {
-    return 1;
-  } else {
-    if (a.grabs > b.grabs) {
-     return -1;
-    } else if (a.grabs < b.grabs) {
-     return 1;
+    if (a.score > b.score) {
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
     } else {
-     return 0;
+      if (a.grabs > b.grabs) {
+        return -1;
+      } else if (a.grabs < b.grabs) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
-  }
   }
 }
 
@@ -150,18 +150,18 @@ var sort_gr = function ( a, b ) {
     return 1;
   } else {
     if (a.score > b.score) {
-    return -1;
-  } else if (a.score < b.score) {
-    return 1;
-  } else {
-    if (a.grabs > b.grabs) {
-     return -1;
-    } else if (a.grabs < b.grabs) {
-     return 1;
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
     } else {
-     return 0;
+      if (a.grabs > b.grabs) {
+        return -1;
+      } else if (a.grabs < b.grabs) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
-  }
   }
 }
 

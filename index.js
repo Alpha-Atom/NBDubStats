@@ -28,31 +28,31 @@ new DubAPI({username: userName, password: passWord}, function (err, bot) {
   });
 
   bot.on(bot.events.roomPlaylistUpdate, function(data) {
-     var lastplayed = data.lastPlay;
-     if (lastplayed === undefined) {
-       return;
-     }
-     var tscore = lastplayed.score.updubs - lastplayed.score.downdubs;
-     var tgrabs = lastplayed.score.grabs;
-     var trackname = lastplayed.media.name;
-     var fkid = lastplayed.media.fkid;
-     var res = request('GET', 'https://api.dubtrack.fm/room/nightblue3').body;
-     var userNum = JSON.parse(res).data.activeUsers;
-     var timestamp = Date.now();
-     var hashname = "song:" + lastplayed.media.type + ":" + fkid;
+    var lastplayed = data.lastPlay;
+    if (lastplayed === undefined) {
+      return;
+    }
+    var tscore = lastplayed.score.updubs - lastplayed.score.downdubs;
+    var tgrabs = lastplayed.score.grabs;
+    var trackname = lastplayed.media.name;
+    var fkid = lastplayed.media.fkid;
+    var res = request('GET', 'https://api.dubtrack.fm/room/nightblue3').body;
+    var userNum = JSON.parse(res).data.activeUsers;
+    var timestamp = Date.now();
+    var hashname = "song:" + lastplayed.media.type + ":" + fkid;
 
-     console.log("Last played was track: " + trackname + " id: " + fkid);
-     console.log("Total score was: " + tscore + " also grabs: " + tgrabs);
-     console.log("There are currently: " + userNum + " users in the room.");
+    console.log("Last played was track: " + trackname + " id: " + fkid);
+    console.log("Total score was: " + tscore + " also grabs: " + tgrabs);
+    console.log("There are currently: " + userNum + " users in the room.");
 
-     var hashobject = {
-       songinfo: lastplayed.media,
-       score: tscore,
-       grabs: tgrabs,
-       users: userNum
-     };
+    var hashobject = {
+      songinfo: lastplayed.media,
+      score: tscore,
+      grabs: tgrabs,
+      users: userNum
+    };
 
-     redis.hset(hashname, timestamp, JSON.stringify(hashobject));
+    redis.hset(hashname, timestamp, JSON.stringify(hashobject));
   });
 
   process.on('SIGINT', function() {
