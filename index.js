@@ -3,6 +3,7 @@ var Redis = require("ioredis");
 var userName = "DubStatsBot";
 var passWord = process.argv[2];
 var redis = new Redis();
+var request = require("sync-request");
 
 new DubAPI({username: userName, password: passWord}, function (err, bot) {
   if (err) return console.error(err);
@@ -35,7 +36,8 @@ new DubAPI({username: userName, password: passWord}, function (err, bot) {
      var tgrabs = lastplayed.score.grabs;
      var trackname = lastplayed.media.name;
      var fkid = lastplayed.media.fkid;
-     var userNum = bot.getUsers().length;
+     var res = request('GET', 'https://api.dubtrack.fm/room/nightblue3').body;
+     var userNum = JSON.parse(res).data.activeUsers;
      var timestamp = Date.now();
      var hashname = "song:" + lastplayed.media.type + ":" + fkid;
 
