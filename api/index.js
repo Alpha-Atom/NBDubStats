@@ -11,10 +11,18 @@ app.get('/dubstats/', function (req, res) {
   if (time1 == -1 && time2 == -1) {
     res.send(songs);
   } else {
-    songs_only;
-    Object.keys(obj).forEach(function (key) {
-      var timestamp; 
+    songs_only = {};
+    Object.keys(songs).forEach(function (key) {
+      if (key == "generated") {
+        songs_only[key] = songs[key];
+      } else {
+        timestamphours = (new Date(songs[key]["timestamp"])).getUTCHours();
+        if (timestamphours >= time1 && timestamphours < time2) {
+          songs_only[key] = songs[key];
+        }
+      }
     });
+    res.send(songs_only);
   }
 });
 
