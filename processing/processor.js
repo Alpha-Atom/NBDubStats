@@ -14,7 +14,9 @@ var processing = function () {
   });
 
   stream.on('end', function() {
-    var final_object = {};
+    var final_object = {
+      "generated": Date.now();
+    };
     for (var j = 0; j < keys.length; j++) {
       commands.push(['hgetall', keys[j]]);
     }
@@ -31,19 +33,20 @@ var processing = function () {
             } else {
               final_object[main_key] = {
                 "song_name": playinfo.songinfo.name,
+                "timestamp": timestamp,
                 "score": playinfo.score,
                 "plays": 1,
-                "grabs": playinfo.grabs
+                "grabs": playinfo.grabs,
+                "users": playinfo.users
               }
             }
           }
         }
       }
-	fs.writeFile('../api/output.json', JSON.stringify(final_object, null, '\t'), (err) => {
-	  if (err) throw err;
-	  console.log('It\'s saved!');
-      process.exit();
-	});
+      fs.writeFile('../api/output.json', JSON.stringify(final_object, null, '\t'), (err) => {
+        if (err) throw err;
+        console.log('It\'s saved!');
+      });
     });
   });
 }
