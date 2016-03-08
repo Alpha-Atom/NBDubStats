@@ -8,12 +8,12 @@ app.get('/dubstats/', function (req, res) {
 
   json = fs.readFileSync("output.json");
   songs = JSON.parse(json);
-  if (t1 == -1 && t2 == -1) {
-    res.send(json);
+  if (time1 == -1 && time2 == -1) {
+    res.send(songs);
   } else {
-    songs_only = 
+    songs_only;
     Object.keys(obj).forEach(function (key) {
-      var timestamp = 
+      var timestamp; 
     });
   }
 });

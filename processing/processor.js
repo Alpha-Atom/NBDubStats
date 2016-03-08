@@ -15,7 +15,7 @@ var processing = function () {
 
   stream.on('end', function() {
     var final_object = {
-      "generated": Date.now();
+      "generated": Date.now()
     };
     for (var j = 0; j < keys.length; j++) {
       commands.push(['hgetall', keys[j]]);
@@ -48,6 +48,7 @@ var processing = function () {
         console.log('It\'s saved!');
       });
     });
+    setTimeout(processing, 10*60*1000);
   });
 }
 
