@@ -33,6 +33,7 @@ var processing = function () {
             } else {
               final_object[main_key] = {
                 "song_name": playinfo.songinfo.name,
+                "timestamp": timestamp,
                 "score": playinfo.score,
                 "plays": 1,
                 "grabs": playinfo.grabs,

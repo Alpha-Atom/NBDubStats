@@ -1,5 +1,7 @@
 var array = Array.apply(null, {length: 24}).map(Number.call, Number).map(function(n){return n+1});
 var labels = Array.apply(null, {length:24}).map(Number.call, Number).map(function(n){return n+":00"});
+var prev_t1 = -1;
+var prev_t2 = -1;
 var mySlider = $("input.slider").slider({
   ticks:array,
   ticks_labels:labels,
@@ -24,4 +26,7 @@ var update_sval = function () {
   output = "Currently showing songs played from " + time1 + " until " + time2 + ".";
   $("#sval").html("<small>" + output + "</small>");
 };
+var populate_table = function() {
+  update_sval();
+}
 update_sval();
