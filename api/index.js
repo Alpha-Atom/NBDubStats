@@ -70,7 +70,7 @@ app.get('/dubstats/', function (req, res) {
   } else {
     songs_array.sort(sort_ud);
   }
-  return_obj.songs = songs_array.slice(count);
+  return_obj.songs = songs_array.slice(0,count);
   if (time1 == -1 && time2 == -1) {
     res.send(return_obj);
   } else {
