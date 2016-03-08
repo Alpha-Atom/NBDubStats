@@ -70,7 +70,12 @@ app.get('/dubstats/', function (req, res) {
   } else {
     songs_array.sort(sort_ud);
   }
-  return_obj.songs = songs_array.slice(0,count);
+  if (count > 0) {
+    console.log(count);
+    return_obj.songs = songs_array.slice(0,count);
+  } else {
+    return_obj.songs = songs_array;
+  }
   if (time1 == -1 && time2 == -1) {
     res.send(return_obj);
   } else {
@@ -84,7 +89,19 @@ var sort_pct = function ( a, b ) {
   } else if (a.pct_up < b.pct_up) {
     return 1;
   } else {
-    return 0;
+   if (a.score > b.score) {
+    return -1;
+  } else if (a.score < b.score) {
+    return 1;
+  } else {
+    if (a.plays > b.plays) {
+     return -1;
+    } else if (a.plays < b.plays) {
+     return 1;
+    } else {
+     return 0;
+    }
+  }
   }
 }
 
@@ -94,7 +111,13 @@ var sort_ud = function ( a, b ) {
   } else if (a.score < b.score) {
     return 1;
   } else {
-    return 0;
+    if (a.grabs > b.grabs) {
+     return -1;
+    } else if (a.grabs < b.grabs) {
+     return 1;
+    } else {
+     return 0;
+    }
   }
 }
 
@@ -104,7 +127,19 @@ var sort_pl = function ( a, b ) {
   } else if (a.plays < b.plays) {
     return 1;
   } else {
-    return 0;
+   if (a.score > b.score) {
+    return -1;
+  } else if (a.score < b.score) {
+    return 1;
+  } else {
+    if (a.grabs > b.grabs) {
+     return -1;
+    } else if (a.grabs < b.grabs) {
+     return 1;
+    } else {
+     return 0;
+    }
+  }
   }
 }
 
@@ -114,7 +149,19 @@ var sort_gr = function ( a, b ) {
   } else if (a.grabs < b.grabs) {
     return 1;
   } else {
-    return 0;
+    if (a.score > b.score) {
+    return -1;
+  } else if (a.score < b.score) {
+    return 1;
+  } else {
+    if (a.grabs > b.grabs) {
+     return -1;
+    } else if (a.grabs < b.grabs) {
+     return 1;
+    } else {
+     return 0;
+    }
+  }
   }
 }
 
