@@ -10,17 +10,18 @@ app.get('/dubstats/', function (req, res) {
   json = fs.readFileSync("output.json");
   songs = JSON.parse(json);
   return_obj = {
-    "generated": songs[generated],
-    "songs": [];
+    "generated": songs["generated"],
+    "songs": []
   }
   songs_array = [];
   seen = {};
+  index = 0;
   if (time1 == -1) {
-    Object.keys(songs).forEach(function (key, index) {
+    Object.keys(songs).forEach(function (key,index) {
       if (key != "generated") {
         var key_seen = key.split("_").slice(1).join("_");
         if (seen[key_seen] === undefined) {
-          seen[key_seen] == index;
+	  seen[key_seen] = songs_array.length;
           songs_array.push(songs[key]);
         } else {
           var tmp = songs_array[seen[key_seen]];
@@ -30,13 +31,13 @@ app.get('/dubstats/', function (req, res) {
       }
     });
   } else {
-    Object.keys(songs).forEach(function (key, index) {
+    Object.keys(songs).forEach(function (key,index) {
       if (key != "generated") {
-        timestamphours = (new Date(songs[key]["timestamp"])).getUTCHours();
+        timestamphours = (new Date(Number.parseFloat(songs[key]["timestamp"]))).getUTCHours();
         if (timestamphours >= time1 && timestamphours < time2) {
           var key_seen = key.split("_").slice(1).join("_");
           if (seen[key_seen] === undefined) {
-            seen[key_seen] == index;
+	    seen[key_seen] = songs_array.length;
             songs_array.push(songs[key]);
           } else {
             var tmp = songs_array[seen[key_seen]];
@@ -64,31 +65,31 @@ app.get('/dubstats/', function (req, res) {
   }
 });
 
-var sort_ud( a, b ) {
+var sort_ud = function ( a, b ) {
   if (a.score > b.score) {
-    return 1;
+    return -1;
   } else if (a.score < b.score) {
-    return -1;
+    return 1;
   } else {
     return 0;
   }
 }
 
-var sort_pl( a, b ) {
+var sort_pl = function ( a, b ) {
   if (a.plays > b.plays) {
-    return 1;
-  } else if (a.plays < b.plays) {
     return -1;
+  } else if (a.plays < b.plays) {
+    return 1;
   } else {
     return 0;
   }
 }
 
-var sort_gr( a, b ) {
+var sort_gr = function ( a, b ) {
   if (a.grabs > b.grabs) {
-    return 1;
-  } else if (a.grabs < b.grabs) {
     return -1;
+  } else if (a.grabs < b.grabs) {
+    return 1;
   } else {
     return 0;
   }
