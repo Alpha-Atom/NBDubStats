@@ -21,11 +21,27 @@
   </head>
   <body>
     <div class="page-header" style="text-align:center">
-        <h1>DubStats <small>Nightblue3 Room</small></h1>
+        <h1>DubStats <br/><small>Nightblue3 Room</small></h1>
     </div>
     <div id="container" style="text-align:center">
         <input class="slider" style="width:90%;margin-left:auto;margin-right:auto"></input>
+        <h2><small>Slide to view popular songs at certain times</small></h2>
+        <h5 id="sval"><small>Currently Between: </small></h5>
     </div>
+    <hr />
+    <table class="table table-hover" style="width:90%;margin-left:auto;margin-right:auto;">
+        <thead>
+        <tr>
+            <th style="width:50%">Song Name</th>
+            <th style="width:16%">Total Score</th>
+            <th style="width:16%">Grabs</th>
+            <th style="width:18%">Plays</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
