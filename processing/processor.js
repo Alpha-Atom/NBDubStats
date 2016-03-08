@@ -37,7 +37,8 @@ var processing = function () {
                 "score": playinfo.score,
                 "plays": 1,
                 "grabs": playinfo.grabs,
-                "users": playinfo.users
+                "users": playinfo.users,
+                "pct_up": Math.floor((Number.parseInt(playinfo.score)/Number.parseInt(playinfo.users))*100)
               }
             }
           }
