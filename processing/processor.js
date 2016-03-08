@@ -1,5 +1,6 @@
 var Redis = require("ioredis");
 var redis = new Redis();
+var fs = require("fs");
 
 var processing = function () {
   var stream = redis.scanStream();
@@ -13,7 +14,7 @@ var processing = function () {
   });
 
   stream.on('end', function() {
-    var final_object;
+    var final_object = {};
     for (var j = 0; j < keys.length; j++) {
       commands.push(['hgetall', keys[j]]);
     }
@@ -38,8 +39,11 @@ var processing = function () {
           }
         }
       }
-      console.log(JSON.stringify(final_object));
+	fs.writeFile('../api/output.json', JSON.stringify(final_object, null, '\t'), (err) => {
+	  if (err) throw err;
+	  console.log('It\'s saved!');
       process.exit();
+	});
     });
   });
 }
