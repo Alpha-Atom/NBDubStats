@@ -2,6 +2,12 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.get('/dubstats/', function (req, res) {
   var time1 = req.query.t1 || -1;
   var time2 = req.query.t2 || -1;
