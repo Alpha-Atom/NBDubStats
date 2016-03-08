@@ -1,18 +1,7 @@
 var Redis = require("ioredis");
 var redis = new Redis();
 
-Redis.Command.setReplyTransformer('hgetall', function (result) {
-  if (Array.isArray(result)) {
-    var obj = {};
-    for (var i = 0; i < result.length; i += 2) {
-      obj[result[i]] = result[i + 1];
-    }
-    return obj;
-  }
-  return result;
-});
-
-var process = function () {
+var processing = function () {
   var stream = redis.scanStream();
   var keys = [];
   var commands = [];
@@ -29,14 +18,18 @@ var process = function () {
     }
     redis.multi(commands).exec(function(err, results) {
       for (var k = 0; k < results.length; k++) {
-        var oKeys = Object.keys(results[k]);
-        for (var ii = 0; ii < oKeys.length; ii++) {
-          var playinfo = JSON.parse(results[k][oKeys[ii]]);
-          console.log(playinfo.songinfo.name);
-        }
+	if (results[k][0] == null) {
+	  var allkeys = results[k][1];
+	  for (var x = 0; x < allkeys.length/2; x++) {
+	    var timestamp = allkeys[x*2];
+	    var playinfo = JSON.parse(allkeys[x*2+1]);
+	    console.log(playinfo.songinfo.name);
+	  }
+	}
       }
+      process.exit();
     });
   });
 }
 
-process();
+processing();
