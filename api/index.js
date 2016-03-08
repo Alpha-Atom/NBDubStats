@@ -94,12 +94,18 @@ var sort_pct = function ( a, b ) {
     } else if (a.score < b.score) {
       return 1;
     } else {
-      if (a.plays > b.plays) {
+      if (a.grabs > b.grabs) {
         return -1;
-      } else if (a.plays < b.plays) {
+      } else if (a.grabs < b.grabs) {
         return 1;
       } else {
-        return 0;
+        if (a.plays > b.plays) {
+          return -1;
+        } else if (a.plays < b.plays) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     }
   }
@@ -116,7 +122,19 @@ var sort_ud = function ( a, b ) {
     } else if (a.grabs < b.grabs) {
       return 1;
     } else {
-      return 0;
+      if (a.pct_up > b.pct_up) {
+        return -1;
+      } else if (a.pct_up < b.pct_up) {
+        return 1;
+      } else {
+        if (a.plays > b.plays) {
+          return -1;
+        } else if (a.plays < b.plays) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
     }
   }
 }
@@ -137,7 +155,13 @@ var sort_pl = function ( a, b ) {
       } else if (a.grabs < b.grabs) {
         return 1;
       } else {
-        return 0;
+        if (a.pct_up > b.pct_up) {
+          return -1;
+        } else if (a.pct_up < b.pct_up) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     }
   }
@@ -154,12 +178,18 @@ var sort_gr = function ( a, b ) {
     } else if (a.score < b.score) {
       return 1;
     } else {
-      if (a.grabs > b.grabs) {
+      if (a.pct_up > b.pct_up) {
         return -1;
-      } else if (a.grabs < b.grabs) {
+      } else if (a.pct_up < b.pct_up) {
         return 1;
       } else {
-        return 0;
+        if (a.plays > b.plays) {
+          return -1;
+        } else if (a.plays < b.plays) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
     }
   }
