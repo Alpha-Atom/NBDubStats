@@ -13,20 +13,32 @@ var processing = function () {
   });
 
   stream.on('end', function() {
+    var final_object;
     for (var j = 0; j < keys.length; j++) {
       commands.push(['hgetall', keys[j]]);
     }
     redis.multi(commands).exec(function(err, results) {
       for (var k = 0; k < results.length; k++) {
-	if (results[k][0] == null) {
-	  var allkeys = results[k][1];
-	  for (var x = 0; x < allkeys.length/2; x++) {
-	    var timestamp = allkeys[x*2];
-	    var playinfo = JSON.parse(allkeys[x*2+1]);
-	    console.log(playinfo.songinfo.name);
-	  }
-	}
+        if (results[k][0] == null) {
+          var allkeys = results[k][1];
+          for (var x = 0; x < allkeys.length/2; x++) {
+            var timestamp = allkeys[x*2];
+            var playinfo = JSON.parse(allkeys[x*2+1]);
+            var main_key = playinfo.songinfo.type + "_" + playinfo.songinfo.fkid;
+            if (final_object.hasOwnProperty(main_key)) {
+              final_object[main_key]["plays"] = final_object[main_key]["plays"]+1;
+            } else {
+              final_object[main_key] = {
+                "song_name": playinfo.songinfo.name,
+                "score": playinfo.score,
+                "plays": 1,
+                "grabs": playinfo.grabs
+              }
+            }
+          }
+        }
       }
+      console.log(JSON.stringify(final_object));
       process.exit();
     });
   });
