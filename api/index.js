@@ -53,6 +53,8 @@ app.get('/dubstats/', function (req, res) {
             var pct_up = Math.floor(((Number.parseInt(tmp.pct_up) * Number.parseInt(tmp.plays)) + Number.parseInt(songs[key]["pct_up"])) / (Number.parseInt(tmp.plays+1)));
             var avg_score = Math.floor(((Number.parseInt(tmp.score) * Number.parseInt(tmp.plays)) + Number.parseInt(songs[key]["score"])) / (Number.parseInt(tmp.plays+1)));
             var avg_grabs = Math.floor(((Number.parseInt(tmp.grabs) * Number.parseInt(tmp.plays)) + Number.parseInt(songs[key]["grabs"])) / (Number.parseInt(tmp.plays+1)));
+            console.log(avg_score);
+            console.log(tmp.score);
             tmp.pct_up = pct_up;
             tmp.score = avg_score;
             tmp.grabs = avg_grabs;
@@ -75,7 +77,6 @@ app.get('/dubstats/', function (req, res) {
     songs_array.sort(sort_ud);
   }
   if (count > 0) {
-    console.log(count);
     return_obj.songs = songs_array.slice(0,count);
   } else {
     return_obj.songs = songs_array;
