@@ -27,6 +27,7 @@ app.get('/dubstats/', function (req, res) {
     Object.keys(songs).forEach(function (key,index) {
       if (key != "generated") {
         var key_seen = key.split("_").slice(1).join("_");
+        songs[key].fkidtype = key_seen;
         if (seen[key_seen] === undefined) {
           seen[key_seen] = songs_array.length;
           songs_array.push(songs[key]);
@@ -45,6 +46,7 @@ app.get('/dubstats/', function (req, res) {
         timestamphours = (new Date(Number.parseFloat(songs[key]["timestamp"]))).getUTCHours();
         if (timestamphours >= time1 && timestamphours < time2) {
           var key_seen = key.split("_").slice(1).join("_");
+          songs[key].fkidtype = key_seen;
           if (seen[key_seen] === undefined) {
             seen[key_seen] = songs_array.length;
             songs_array.push(songs[key]);
