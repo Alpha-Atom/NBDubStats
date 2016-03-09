@@ -101,9 +101,9 @@ app.get('/song/', function (req, res) {
       "error": "Please supply a song fkid and type."
     });
   } else {
-    var slug = ("song_" + req.query.s).split("_").join(":");
+    var slug = ("song:" + req.query.s).replace(/(youtube|soundcloud)_/, "$1:");
     redis.hgetall(slug).then(function (result) {
-      res.send(result);
+      res.send(JSON.parse(result));
     });
   }
 });
