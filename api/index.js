@@ -94,7 +94,7 @@ app.get('/dubstats/', function (req, res) {
   }
 });
 
-app.get('/song/', function (req, res)) {
+app.get('/song/', function (req, res) {
   var fkidtype = req.query.s || "";
   if (fkidtype == "") {
     res.send({
@@ -106,7 +106,7 @@ app.get('/song/', function (req, res)) {
       res.send(result);
     });
   }
-}
+});
 
 var sort_pct = function ( a, b ) {
   if (a.pct_up > b.pct_up) {
