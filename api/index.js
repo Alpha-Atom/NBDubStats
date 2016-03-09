@@ -105,7 +105,7 @@ app.get('/song/', function (req, res) {
     redis.hgetall(slug).then(function (result) {
       return_obj = {};
       Object.keys(result).forEach(function (key,index) {
-        return_obj[key] = result[key];
+        return_obj[key] = JSON.parse(result[key]);
       });
       res.send(return_obj);
     });
