@@ -1,4 +1,6 @@
 var express = require('express');
+var Redis = require('ioredis');
+var redis = new Redis();
 var app = express();
 var fs = require("fs");
 
@@ -91,6 +93,20 @@ app.get('/dubstats/', function (req, res) {
     res.send(return_obj);
   }
 });
+
+app.get('/song/', function (req, res)) {
+  var fkidtype = req.query.s || "";
+  if (fkidtype == "") {
+    res.send({
+      "error": "Please supply a song fkid and type."
+    });
+  } else {
+    var slug = ("song_" + req.query.s).split("_").join(":");
+    redis.hgetall(slug).then(function (result) {
+      res.send(result);
+    });
+  }
+}
 
 var sort_pct = function ( a, b ) {
   if (a.pct_up > b.pct_up) {
