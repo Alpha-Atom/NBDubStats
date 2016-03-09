@@ -1,5 +1,5 @@
 {
-	"generated": 1457491010474,
+	"generated": 1457491610611,
 	"1457433623760_youtube_1o6koztxLF0": {
 		"song_name": "Jacob Tillberg - Fade Away (Deaf Kev Remix) [JompaMusic Release]",
 		"timestamp": "1457433623760",
@@ -278,6 +278,15 @@
 		"grabs": 0,
 		"users": 266,
 		"pct_up": 22
+	},
+	"1457491352348_youtube__YVzvrTIX6o": {
+		"song_name": "t.A.T.u. - All The Things She Said (Rusty Hook Flip)",
+		"timestamp": "1457491352348",
+		"score": 45,
+		"plays": 1,
+		"grabs": 4,
+		"users": 141,
+		"pct_up": 31
 	},
 	"1457438981950_youtube_qo6ygYSxwEY": {
 		"song_name": "Gioni - Trigger",
@@ -1573,6 +1582,15 @@
 		"plays": 1,
 		"grabs": 1,
 		"users": 118,
+		"pct_up": 29
+	},
+	"1457491167248_youtube_eUECsCpQraI": {
+		"song_name": "K-391 - Earth",
+		"timestamp": "1457491167248",
+		"score": 41,
+		"plays": 1,
+		"grabs": 2,
+		"users": 141,
 		"pct_up": 29
 	},
 	"1457433315656_youtube_78JXdi7IGNo": {
