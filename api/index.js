@@ -103,6 +103,11 @@ app.get('/song/', function (req, res) {
   } else {
     var slug = ("song:" + req.query.s).replace(/(youtube|soundcloud)_/, "$1:");
     redis.hgetall(slug).then(function (result) {
+      return_obj = {};
+      Object.keys(result).forEach(function (key,index) {
+        return_obj[key] = result[key];
+      });
+      res.send(return_obj);
     });
   }
 });
